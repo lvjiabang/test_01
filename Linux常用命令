@@ -1,0 +1,223 @@
+
+uname -a 查看系统信息
+查看os详细信息
+cat /etc/os-release 
+常见的架构：x86 x64 arm64等同于aarch64
+linux 系统： ID="centos" 
+移动文件夹：mv xxx /目标路径
+改名：mv xxx(旧名称) 新名称
+wget + 下载链接： 下载包名
+拷贝文件：cp /home/xxx ./（拷贝的目标地址）加-r参数 拷贝文件夹的所有子文件
+查看进程： ps -ef | grep 进程名字
+动态查看日志：tail -f ascend_install.log（路径+文件名）
+查看用户登录ID信息： cat /etc/passwd
+查看组ID信息文件： cat /etc/group
+查看当前登录用户的UID GID:id
+查询当前用户属性信息： finger
+删除用户： userdel root
+删除用户： userdel  -r root 顺带删除用户下的家目录
+查看环境信息： env(永久环境变量) export(export导入的临时环境变量)
+连接另一个服务器： ssh 1.0174.222.20
+					ssh root@10.174.222.20
+					ssh -v -p 22 10.174.222.20
+					ssh -v -p 22 root@10.174.222.20
+查看环境信息： env
+Linux中跑py脚本：python3 *.py 
+Linux中安装whl包：pip3 install *.whl
+
+cat /dev/null > messages   清空messages文件里边的内容
+远程拷贝文件：
+从文件所在环境拷贝到目标环境，在文件所在环境执行下列命令：
+scp *.run root@10.174.222.20:/home/xxx/
+    文件名称  目标环境IP地址：拷贝的目标路径 
+从本地拷贝到远程服务器上：
+scp remote@10.174.222.20:/home/*.txt /home/*.txt(当前环境所要拷贝的文件地址)
+          远程环境IP地址:远程环境文件存放路径     
+ls -la：可以查看隐藏文件   
+解压：tar -zxvf automl-master.tar.gz  unzip 压缩包名.zip
+打包：tar -zcvf automl-master
+zip 压缩文件名 原文件
+zip 123.txt.zip /data/lai.txt
+解压：
+unzip 123.txt.zip
+zip -r 压缩文件名 源目录
+显示文件行数： vim 进入到文件后，输入 set nu 显示文件所有得行数，
+  按g ,再按shift+g 跳转到文件的最后一行
+stat ： 查看命令状态码
+修改权限：chmod u=rwx,g=rx,o=r test1
+拿掉全部人的可执行权限：chmod a-x test1
+更改文件属组:chgrp [-R] 属组名 文件名
+更改文件属主，也可以同时更改文件属组:chown [–R] 属主名 文件名
+                                       chown [-R] 属主名：属组名 文件名
+									   
+同时修改文件的属主和属组:chown -R HwHiAiUser:HwHiAiUser 文件/文件夹
+创建用户：useradd -g usergroup -d /home/username -m username -s /bin/bash
+复制文件夹：cp -r /home/lvjiabang* /home/1008
+移动文件夹：mv /home/lvjiabang* /home/1008
+vi/vim进入文件后操作：
+ shift + a 鼠标跳转到当前所在行的末尾
+ 按gg   跳转到文件头
+ 按G    跳转到文件尾
+ 查找特定字段  /字段i 按Enter 再按n（小写）查看下一个匹配 按N(大写）查看上一个匹配
+ 
+将用户添加属组：  usermod -a -G HwHiAiUser lvjiabang
+查找文件：
+find . -name '*.run' | grep 'xxx' 查找当前目录下的.run并且名称中包含”xxx"字符的文件
+find /查找目录 -name “查找条件”
+find /home/lvjiabang -type f | wc -l 列出当前目录下的所有子目录及其子目录文件并统计个数
+find 命令后继续执行其它命令：
+查找run包并安装：
+find 路径 -name *.run -exec time -p ./{} --full \;
+查找png文件，并将查找结果复制到 /home/robin/png/下
+find -name "*.png" -exec cp -r {} /home/robin/png/ \;
+
+从A环境往B环境拷贝文件，在A环境下执行：
+scp xxx root@B环境的IP地址:B环境放文件路径
+如果想拷贝文件夹下的所有文件 使用：
+scp -R xxx root@B环境的IP地址:B环境放文件路径 
+
+修改用户密码：
+root用户下：passwd lvjiabang
+输入新密码即可修改
+
+指定安装版本： pip3 install numpy==1.16.6
+
+time -p 以秒为单位显示命令执行耗时，一般放命令行首端
+如 想记录装包的时间：
+time -p ./*.run 
+time -p pip3 install xxx
+
+netstat -a 查看端口
+
+stat常用命令：
+stat -c %U xxx 查看文件夹属主
+homestat -c %u xxx 查看属主ID
+stat -c %G xxx 查看文件夹属组
+stat -c %g xxx 查看属组ID
+stat -c %a xxx 以数字显示权限
+stat -c %A xxx 以rwx显示权限
+
+uname常用命令：
+uname -s 查看系统内核
+uname –a 查看系统信息
+uname –m/p/i 查看系统架构 如:aarch64
+uname –v 显示内核版本
+uname –n 显示系统名称 如:ubuntu
+
+sed -i 's/原字符串/新字符串/' /home/1.txt   替换文件
+sed -i 's/原字符串/新字符串/g' /home/1.txt   全局替换文件
+
+du -sh  查看当前目录所占磁盘空间
+
+stat -c %a 文件/文件夹  以数字的形式返回该文件/文件夹权限
+从一台机器链接到另一台机器：
+ssh root/HwHiAiUser@10.174.228.14(目标环境IP)
+grep -rn  “你要搜索的内容”  在那个路径下搜索
+grep -rn "内容” “路径”
+
+ps -aux | grep 进程名字 查询某个进程是否存在
+
+lspci | grep d500  有返回值就是 710芯片 没有则不是
+lspci | grep d100  有返回值就是 310芯片 没有则不是
+lspci | grep d801  有返回值就是 910芯片 没有则不是
+
+创建软连接：
+ln -s [源文件或者源路径] [目标文件或目标路径]
+例如：
+ln -s /home/AutoTest/Temp/Package/MindStudioCommandLine/Ascend-cann-toolkit_5.1.T202_linux-x86_64.run /home/lvjiabang/9999/123
+确认环境是不是300i pro npu-smi info -t product -i 0
+
+查系统版本号：cat /etc/os-release
+
+创建用户：
+useradd -g HwHiAiUser -d /home/HwHiAiUser -m HwHiAiUser -s /bin/bash
+
+vim 清除所有内容：先gg定位到首行，让后dG删除全部
+pip3 show click 查看click版本
+重启端口：
+docker ps -a
+docker restart hutafagent_55107
+docker exec -it hutafagent_55106 /bin/bash
+
+查询两个文件：
+find ./ -name "xxx“ -o -name "xxx" 一个满足即可
+find ./ -name "xxx“  -name "xxx" 两个同时找到才满足
+split -b 目标大小 拆分文件名 例如：
+split -b 10G/M  automl.tar.gz  
+tar -zcvf uot.tar.gz out
+sed 打印匹配内容和行号：反斜杠(\)来转义斜杠
+sed -n -e '/\/toolkit\/bin\/setenv.bash/p' -e '/\/toolkit\/bin\/setenv.bash/=' /root/.bashrc
+修改文件信息：sed -i "s#UserName=.#UserName=modify#g" /ascend_install.info
+修改文件信息：
+用6.3.T103全局替换6.3.T102:sed -i 's/6.3.T102/6.3.T103/g' version_name.info
+用6.3.T103替换6.3.T102:sed -i 's/6.3.T102/6.3.T103/' version_name.info
+find -name abc -type d 查询名字为abc的目录
+find -user root 查询当前目录及子目录属主为root的文件
+find . -perm 755 查询当前目录及子目录权限为755 的文件
+
+进制转换问题：
+十进制转二进制：
+整数：除以2，反向取余数，直到商为0终止
+小数：乘2取整，顺序输出
+
+查看某个文件/文件夹大小：du -sh 文件/文件夹
+
+tail -n 30 vgg11bn.txt 动态查看文件最后30行 CTRL+C 退出
+tail -f release.log 动态查看log文件
+ls >> 1.txt  把ls命令的返回值写入到1.txt文件中
+
+pip3 show timm 查看timm版本信息
+每五秒查看卡信息：
+watch -n 5 npu-smi info
+指定训练卡;
+export DEVICE_ID=6 
+NPU_VISIBLE_DEVICES=7
+
+输入英文有空格：如：ｈａｐｐｙ？ shift+空格 切换全角/半角模式
+
+内存 CPU 磁盘信息查询：
+查看磁盘信息 ： df -hl 
+查看CPU信息：lscpu
+查看CPU型号;grep "model name" /proc/cpuinfo |awk -F ':' '{print $NF}'
+查看内存信息：free -g 
+内存：
+查询内存卡槽数量：
+sudo dmidecode -t memory |grep "Number Of Devices" |awk '{print $NF}'
+sudo dmidecode -t memory |grep "Associated Memory Slots" |awk '{print $NF}'
+查询内存数量：也就是该机器上插了多少根内存
+sudo dmidecode -t memory |grep -A16 "Memory Device$" |grep 'Size:.*MB' |wc -l
+sudo dmidecode -t memory |grep -A16 "Memory Device$" |grep 'Size:.*GB' |wc -l
+查询内存的支持类型：也就是代数：如DDR4 DDR5
+sudo dmidecode -t memory |grep -A16 "Memory Device$" |grep "Type:"
+查询每个内存频率：
+sudo dmidecode -t memory |grep -A16 "Memory Device$" |grep "Speed:"
+查询单根内存的大小：
+sudo dmidecode -t memory |grep -A16 "Memory Device$" |grep "Size:"
+硬盘：
+硬盘数量、大小：sudo fdisk -l |grep "Disk /dev/sd"
+硬盘型号：sudo hdparm -i /dev/sda |grep "Model"
+查看硬盘信息；sudo hdparm -I /dev/sda
+查看硬盘转速：
+显卡
+查看显卡版本号：lspci | grep -i vga
+查看GPU详细信息；lspci -v -s 01:00.0
+npu-smi info
+
+linux 装python：
+开始之前需配置umask的值：
+/root 路径下 vi .bashrc 
+添加 umask 0022（放在末行） 
+保存即可
+
+1，下载对应版本的python压缩包 比如：Python-3.7.5.tgz
+2，将压缩包放在 /root 路径下并在当前路径下解压 tar -zxvf Python-3.7.5.tgz
+3，解压完成后 进入到对应的文件夹中 比如：Python-3.7.5中
+4，执行 ./configure --prefix=/usr/local/python3.7.5 --enable-loadable-sqlite-extensions --enable-shared
+5，然后执行 make -j 40
+6,执行 make install 
+7,执行 vi .bashrc  写入下面的资料：
+	#用于设置python3.7.5库文件路径
+	export LD_LIBRARY_PATH=/usr/local/python3.7.5/lib:$LD_LIBRARY_PATH
+	#如果用户环境存在多个python3版本，则指定使用python3.7.5版本
+	export PATH=/usr/local/python3.7.5/ibin:$PATH
+8,执行 source .bashrc 即可
